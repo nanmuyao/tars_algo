@@ -30,22 +30,37 @@ class BTree():
                 else:
                     root.left = Node(value)
 
-    def pre_order(self, root):
+    def pre_order_r(self, root):
+        """递归先序遍历"""
         if not root:
             return
         print(root.value)
-        self.pre_order(root.left)
-        self.pre_order(root.right)
+        self.pre_order_r(root.left)
+        self.pre_order_r(root.right)
 
+   # 先序打印二叉树（非递归）
+    def pre_order(self, node):
+        stack = [node]
+        while len(stack) > 0:
+            print(node.value)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+            node = stack.pop() 
 
 btree = BTree()  
 l = [8, 3, 9, 1, 13, 4]
 for i in l:
     btree.insert(i)
 
-btree.pre_order(btree.root)
+btree.pre_order_r(btree.root)
+print('===')
 print(btree.root.left.left.value)
+print('===')
 print(btree.root.right.right.value)
+print('===')
+btree.pre_order(btree.root)
 
 import networkx as nx
 import matplotlib.pyplot as plt
