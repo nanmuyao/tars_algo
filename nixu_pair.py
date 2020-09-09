@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# 1,2,3,4,5 
+# 5,4,3,2,1
+# 0 + 1 + 2 + 3 + 4 = 10
+
+# 时间复杂度O(n2)
+def reverse_pair(list_value):
+    print(list_value)
+    reverse_pair_count = 0
+    while len(list_value):
+        last_value = list_value.pop()
+        for i in list_value:
+            if last_value < i:
+                reverse_pair_count += 1
+    print(reverse_pair_count)
+
+
+l = [6, 2, 8, 1, 9, 0]
+#    0  1  0  3  0  5
+reverse_pair(l)
+l = [1, 2, 3, 4, 5]
+#    0  1  0  3  0  5
+reverse_pair(l)
+l = [5, 4, 3, 2, 1]
+#    0  1  0  3  0  5
+reverse_pair(l)
