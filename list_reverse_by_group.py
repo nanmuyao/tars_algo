@@ -1,29 +1,39 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from lib.self_link import LinkList, Node
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
-# reverse
-l = LinkList()
-l.add(1)
-l.add(2)
-l.add(3)
-l.add(4)
-l.add(5)
-l.print_link_list()
+class Solution(object):
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        phead = ListNode(0)
+        phead.next = head
+        stack = []
+        tmp_k = k
+        cur = phead
+        while cur.next:
+            cur_node = cur.next
+            stack.append(cur_node)
+            tmp_k-=1
+            if tmp_k == 0:
+                tmp_k = k
 
-
-# reverse
-def reverse():
-    head = l.head
-    phead = head 
-    while phead and phead.next:
-        a = phead.next
-        b = phead.next.next
-        a.next = b.next
-        b.next = a
-        phead = a
-    return head
-
-reverse()
-l.print_link_list()
+                # 进行翻转
+                first_node_next = None
+                while len(stack) > 0:
+                    node = stack.pop()
+                    if not first_node_next:
+                        first_node_next = node.next
+                    phead.next = node
+                    phead = phead.next
+                if first_node_next:
+                    first_node_next = None
+                    phead.next = first_node_next
