@@ -9,9 +9,26 @@ def merge_two_list(left, right):
         else:
             l.append(right[right_index])
             right_index += 1
-    l.extend(left[:left_index])
-    l.extend(right[:right_index])
+    l.extend(left[left_index:])
+    l.extend(right[right_index:])
     return l
+
+# def merge_two_list(data_left, data_right):
+#     i = 0
+#     j = 0
+#     list_result = []
+#     while i < len(data_left) and j < len(data_right):
+#         if data_left[i] <= data_right[j]:
+#             list_result.append(data_left[i])
+#             i+=1
+#         else:
+#             list_result.append(data_right[j])
+#             j+=1
+#     list_result.extend(data_left[i:])
+#     list_result.extend(data_right[j:])
+#     return list_result
+
+
 
 def merge(l):
     if len(l) <= 1:
