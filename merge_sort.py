@@ -20,7 +20,7 @@ def merge_two_list(data_left, data_right):
 def merge(data_list):
     length = len(data_list)
     if length <= 1:
-	return data_list
+        return data_list
 
     m = length // 2
 
@@ -30,4 +30,4 @@ def merge(data_list):
     return merge_two_list(data_left, data_right)
 
 l = [1, 3, 2, 4, 0]
-print merge(l)
+print(merge(l))
