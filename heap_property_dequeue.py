@@ -2,7 +2,7 @@
 
 class Heap:
     def __init__(self):
-        self.stack = []
+        self.stack = [90,80,70,60,40,30,20,10,50]
 
     def insert(self, num):
         self.stack.append(num)
@@ -10,17 +10,19 @@ class Heap:
         print(self.stack)
 
     def shift_up(self):
+        stack = self.stack
         current_index = len(self.stack) - 1
         parent_index = (current_index) // 2
-        while True:
-            if self.stack[current_index] > self.stack[parent_index]:
-                self.stack[current_index], self.stack[parent_index] = \
-                    self.stack[parent_index], self.stack[current_index]
+        while current_index > 0:
+            if stack[parent_index] >= stack[current_index]:
+                break
+            else:
+                stack[parent_index], stack[current_index] = \
+                    stack[current_index], stack[parent_index]
                 # 这里要把两个指针移动起来
                 current_index = parent_index
-                parent_index = (current_index) // 2
-            else:
-                break
+                # 索引为i的父节点索引为（i-1）//2
+                parent_index = (current_index - 1) // 2
 
     def d(self):
         value = self.pop()
@@ -68,9 +70,4 @@ class Heap:
 
 if __name__ == "__main__":
     h = Heap()
-    h.insert(1)
-    h.insert(2)
-    h.insert(3)
-    print(h.pop())
-    print(h.pop())
-    print(h.pop())
+    h.insert(85)
