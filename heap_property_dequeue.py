@@ -1,58 +1,4 @@
 # encoding="utf-8"
-
-class Heap:
-    def __init__(self):
-        self.stack = [90,85,70,60,80,30,20,10,50,40]
-
-    def insert(self, num):
-        self.stack.append(num)
-        self.shift_up()
-        print(self.stack)
-
-    def shift_up(self):
-        stack = self.stack
-        current_index = len(self.stack) - 1
-        parent_index = (current_index) // 2
-        while current_index > 0:
-            if stack[parent_index] >= stack[current_index]:
-                break
-            else:
-                stack[parent_index], stack[current_index] = \
-                    stack[current_index], stack[parent_index]
-                # 这里要把两个指针移动起来
-                current_index = parent_index
-                # 索引为i的父节点索引为（i-1）//2
-                parent_index = (current_index - 1) // 2
-
-    def d(self):
-        value = self.pop()
-        self.shift_down()
-        return value
-
-    def pop(self):
-        self.stack[0], self.stack[-1] = self.stack[-1], self.stack[0]
-        return self.stack.pop()
-
-    def shift_down(self):
-        root_index = 0
-        length = len(self.stack) - 1
-        stack = self.stack
-        while root_index < length:
-            left_index = 2 * root_index + 1
-            right_index = 2 * root_index + 2
-            max = left_index
-            if left_index > length:
-                break
-            if right_index <= length and stack[left_index] < stack[right_index]:
-                max = right_index
-            
-            if stack[root_index] < stack[max]:
-                stack[root_index], stack[max] = stack[max], stack[root_index]
-                root_index = max
-            else:
-                break
-            
-                        
 # heap_sort 代码实现
 def build(arr, root, end):
     while True:
@@ -82,21 +28,23 @@ def heap_sort(arr):
         # 由后向前遍历所有的根节点，建堆并进行调整
         build(arr, root, n - 1)
         
+    # 方式2
+    # 建立堆
+    # _first_root = first_root
+    # while _first_root >= 0:
+    #     build(arr, _first_root, n-1)
+    #     _first_root-=1
+        
     print('build after', arr)
     for end in range(n - 1, 0, -1): 
         # 调整完成后，将堆顶的根节点与堆内最后一个元素调换位置，此时为数组中最大的元素，
         # 然后重新调整堆，将最大的元素冒到堆顶。依次重复上述操作
         arr[0], arr[end] = arr[end], arr[0]
+        # 这一行代码太秒了 amazing，利用桶排序原地把排序做了，空间复杂度O(1)
         build(arr, 0, end - 1)
         
 
 if __name__ == "__main__":
-    # h = Heap()
-    # h.insert(85)
-    # print(h.stack)
-    # print(h.d())
-    # print(h.stack)
-
     arr = [5, 8, 1, 0, 3, 7, 6, 2, 9]
     heap_sort(arr)
     print(arr)
