@@ -48,3 +48,6 @@ if __name__ == "__main__":
     arr = [5, 8, 1, 0, 3, 7, 6, 2, 9]
     heap_sort(arr)
     print(arr)
+    
+# 参考视频，老实讲的太棒了
+# https://www.bilibili.com/video/BV1Et411v7cN/?spm_id_from=333.788.videocard.0
