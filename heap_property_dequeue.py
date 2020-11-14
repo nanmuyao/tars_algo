@@ -44,13 +44,51 @@ def heap_sort(arr):
         build(arr, 0, end - 1)
         
 
-if __name__ == "__main__":
-    arr = [5, 8, 1, 0, 3, 7, 6, 2, 9]
-    heap_sort(arr)
-    print(arr)
+# if __name__ == "__main__":
+#     arr = [5, 8, 1, 0, 3, 7, 6, 2, 9]
+#     heap_sort(arr)
+#     print(arr)
     
 # 参考视频，老实讲的太棒了
 # https://www.bilibili.com/video/BV1Et411v7cN/?spm_id_from=333.788.videocard.0
 
-提交1
-提交2
+    
+    
+arr = [6, 3, 8, 4, 9, 7, 2, 1]
+# 建堆前 [6, 3, 8, 4, 9, 7, 2, 1]
+# 建堆后 [9, 6, 8, 4, 3, 7, 2, 1]
+# 排序后 [1, 2, 3, 4, 6, 7, 8, 9]
+
+def build1(arr, root, end):
+    # end 这个参数也很秒啊，控制排序使用
+    while True:
+        left = 2 * root + 1
+        right = 2 * root + 2
+        max = left
+        if left > end:
+            break
+        if right <= end and arr[right] > arr[left]:
+            max = right
+        if arr[max] > arr[root]:
+            arr[max], arr[root] = arr[root], arr[max]
+        else:
+            break
+        
+def sort():
+    first_root = len(arr) // 2 -1
+    end = len(arr) - 1
+    print("before build heap", arr)
+    for root in range(first_root, -1, -1):
+        build1(arr, root, end)
+    print('after build heap', arr)
+    
+    for end in range(len(arr) - 1, -1, -1):
+        # 这里倒数推荐的end，因为每一次的end都已经有序了。
+        arr[end], arr[0] = arr[0], arr[end]
+        build1(arr, 0, end - 1)
+    print("after sorted heap", arr)
+
+if __name__ == "__main__":
+    sort()
+    
+    
