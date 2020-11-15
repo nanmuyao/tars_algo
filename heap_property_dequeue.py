@@ -83,7 +83,7 @@ def sort():
     print('after build heap', arr)
     
     for end in range(len(arr) - 1, -1, -1):
-        # 这里倒数推荐的end，因为每一次的end都已经有序了。
+        # 这里倒数的是end，因为每一次建堆swap后end都有序
         arr[end], arr[0] = arr[0], arr[end]
         build1(arr, 0, end - 1)
     print("after sorted heap", arr)
