@@ -29,4 +29,36 @@ def f(n):
         return 1
     else:
         return f(n-1) + f(n-2)
-print(f(30))
+print('fei bo na qie', f(30))
+
+
+# 动态规划
+class Solution:
+    def numWays(self, n: int) -> int:
+        a, b = 1, 1
+        for _ in range(n):
+            a, b = b, a + b
+        return a % 1000000007
+
+print('dong tai gui hua ', Solution().numWays(30))
+
+
+# 递归记忆法
+class Solution(object):
+    memo = dict()
+    def numWays(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n in self.memo.keys():
+            return self.memo[n]
+        elif n == 0:
+            return 1
+        elif n == 1:
+            return 1
+        else:
+            self.memo[n] = self.numWays(n-1) + self.numWays(n-2)
+            return self.memo[n] % 1000000007
+        
+print('di gui ji yi fa ', Solution().numWays(30))
