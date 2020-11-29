@@ -47,7 +47,7 @@ class Solution2(object):
             if s[i] == '0' and s[i-1] == '0':
                 return 0
             if s[i] != '0':
-                w = w1
+                w += w1
             if 10 <= int(s[i-1:i+1]) <= 26:
                 w += w2
             w2 = w1
