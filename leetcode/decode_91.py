@@ -27,3 +27,31 @@ class Solution(object):
         return _ways(s)
         
 print(Solution().numDecodings('302213'))
+
+# ¶¯Ì¬¹æ»®
+class Solution2(object):
+    result = {}
+    def numDecodings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if s[0:1] == '0' or len(s) == 0:
+            return 0
+        if len(s) == 1:
+            return 1
+        
+        w1, w2 = 1, 1
+        for i in range(1, len(s)):
+            w = 0
+            if s[i] == '0' and s[i-1] == '0':
+                return 0
+            if s[i] != '0':
+                w = w1
+            if 10 <= int(s[i-1:i+1]) <= 26:
+                w += w2
+            w2 = w1
+            w1 = w
+        return w1
+    
+print(Solution2().numDecodings('102213'))
