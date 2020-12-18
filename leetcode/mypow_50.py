@@ -29,6 +29,7 @@ class Solution(object):
             return 1 / self.myPow(x, -n)
         if n % 2:
             return x * self.myPow(x, n-1)
+        # timeout
         return self.myPow(x, n/2) * self.myPow(x, n/2)
 
 class Solution(object):
