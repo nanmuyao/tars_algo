@@ -1,0 +1,36 @@
+# 2021_11_01 没搞出来
+class Solution(object):
+    def maxProfit(self, k, prices):
+        """
+        :type k: int
+        :type prices: List[int]
+        :rtype: int
+        """
+        profit = [
+            [
+                [
+                   0 for _k in range(k)
+                ]
+                for side in ("wait", "buy", "sell")
+
+            ]
+            for day in range(len(prices))
+        ]
+
+        profit[0][0][0] = 0 # 什么都不做
+        profit[0][1][1] = -prices[0] #买入
+        profit[0][1][2] = 0 #卖出
+
+        for i in range(1, len()):
+            初始化？
+
+        for day in range(1, len(prices)):
+            for _k in range(1, k):
+                if _k > day: continue
+                pre_day = day - 1
+                today_pay = prices[day]
+                profit[day][_k][0] = max(profit[pre_day][_k-1][0], profit[pre_day][_k-1][1], profit[pre_day][_k-1][2])
+                profit[day][-k][1] = max(profit[pre_day][_k-1][0] - today_pay, profit[pre_day][_k-1][2] - today_pay)
+                profit[day][-k][2] = max(profit[pre_day][_k-1][0] + today_pay, profit[pre_day][_k-1][1] + today_pay)
+    
+        print(profit)
