@@ -29,7 +29,6 @@ l = [1, 3, 2, 4, 0]
 
 # print(merge(l))
 
-
 # time n
 def sort(left, right):
     i, j = 0, 0
