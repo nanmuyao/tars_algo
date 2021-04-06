@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-
-#!/usr/bin/env python
 import uuid
 import time
 import urllib
@@ -104,7 +100,7 @@ class ChETHUSDT1min(ChPipeline):
         self.price = []
         self.klines = OrderedDict()
 
-    def send_ding(self, msg):
+    def ding(self, msg):
         from dingtalkchatbot.chatbot import DingtalkChatbot
         # WebHook地址
         webhook =  'https://oapi.dingtalk.com/robot/send?access_token=d3b925bbeeed4a0c58bcf38cea6e2c0d98b4876feab1ec860ed9ed662f7e41a1'
@@ -118,41 +114,66 @@ class ChETHUSDT1min(ChPipeline):
         print(res)
 
     def append_data(self, kline, **kwargs):
-        ts = int(kline.get('ts') / 1000)
+        ts = kline.get('ts')
         close = kline.get('tick', {}).get('close')
+        if not ts or not close:
+            # filter data
+            return
         self.klines[ts] = close
         print(f"klines {self.klines}")
+        self.strategy()
 
     def strategy(self):
         # 3 分钟
-        pass
+        prices = self.klines.values()
+        max_close = max(prices)
+        min_close = min(prices)
+        print(max_close, min_close)
+        if (max_close - min_close) > 10:
+            self.ding(f"3 min max_close:{max_close} - min_close:{min_close} diff:{max_close - min_close}")
 
+        tss = self.klines.keys()
+        max_ts = int(max(tss) / 1000)
+        min_ts = int(min(tss) / 1000)
+        ts_distance = 3 * 60
+        if (max_ts - min_ts) > ts_distance:
+            # 清理kline
+            new_klines = OrderedDict()
+            pivot_ts = max_ts - ts_distance
+            for ts, close in self.klines.items():
+                if int(ts / 1000) > pivot_ts:
+                    new_klines[ts] = close
+            self.klines = new_klines
+
+        print(f"strategy: {self.klines}")
 
 ch = ChETHUSDT1min()
+# close = 0
 
-while True:
-    print(111)
-    ts = int(time.time() * 1000)
-    tick = {
-            'id': 1617549180, 
-            'mrid': 22382413742, 
-            'open': 2084.95, 
-            'close': 2084.95, 
-            'high': 2084.95, 
-            'low': 2084.95, 
-            'amount': 0, 
-            'vol': 0, 
-            'trade_turnover': 0, 
-            'count': 0
-        }
-    kline = {
-        'ch': 'market.ETH-USDT.kline.1min', 
-        'ts': ts, 
-        'tick': tick
-        }
-    ch.append_data(kline)
-    import time
-    time.sleep(3)
+# while True:
+#     ts = int(time.time() * 1000)
+#     close=close + 1
+#     tick = {
+#             'id': 1617549180, 
+#             'mrid': 22382413742, 
+#             'open': 2084.95, 
+#             'close': close, 
+#             'high': 2084.95, 
+#             'low': 2084.95, 
+#             'amount': 0, 
+#             'vol': 0, 
+#             'trade_turnover': 0, 
+#             'count': 0
+#         }
+#     kline = {
+#         'ch': 'market.ETH-USDT.kline.1min', 
+#         'ts': ts, 
+#         'tick': tick
+#         }
+#     ch.append_data(kline)
+#     ch.strategy()
+#     import time
+#     time.sleep(3)
 
 async def handle_ws_data(*args, **kwargs):
     """ callback function
@@ -223,4 +244,3 @@ if __name__ == "__main__":
         except Exception as e:
             traceback.print_exc()
             print('websocket connection error. reconnect rightnow')
-
