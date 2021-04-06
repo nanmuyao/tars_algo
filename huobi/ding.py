@@ -99,6 +99,8 @@ class ChETHUSDT1min(ChPipeline):
         self.klines = []
         self.price = []
         self.klines = OrderedDict()
+        self.max_close = 0
+        self.min_close = 0
 
     def ding(self, msg):
         from dingtalkchatbot.chatbot import DingtalkChatbot
@@ -128,9 +130,16 @@ class ChETHUSDT1min(ChPipeline):
         prices = self.klines.values()
         max_close = max(prices)
         min_close = min(prices)
-        print(max_close, min_close)
         if (max_close - min_close) > 10:
-            self.ding(f"3 min max_close:{max_close} - min_close:{min_close} diff:{max_close - min_close}")
+            if not self.max_close and not self.min_close:
+                print(f"max_close {max_close} min_close {min_close}")
+                self.ding(f"3 min max_close:{max_close} - min_close:{min_close} diff:{max_close - min_close}")
+            else:
+                if self.max_close != max_close and self.min_close != min_close:
+                    print(f"max_close {max_close} min_close {min_close}")
+                    self.ding(f"3 min max_close:{max_close} - min_close:{min_close} diff:{max_close - min_close}")
+            self.max_close = max_close
+            self.min_close = min_close
 
         tss = self.klines.keys()
         max_ts = int(max(tss) / 1000)
