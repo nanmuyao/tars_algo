@@ -8,6 +8,7 @@ class MyQueue(object):
         self.stack1.append(x)
 
     def pop(self):
+        # 这里注意stack2中的数据排序具有最高优先级，所以只要stack2中有数据那么久直接pop， peek同理
         if not self.stack2:
             while self.stack1:
                 self.stack2.append(self.stack1.pop())
