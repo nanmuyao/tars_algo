@@ -2,7 +2,7 @@ arr = [2, 1, 7, 9, 5, 8]
 print('sort before', arr)
 
 def quick_sort(arr):
-    if len(arr) < 2:
+    if len(arr) <= 1:
         return arr
     pivot = arr.pop()
     lesser = []
