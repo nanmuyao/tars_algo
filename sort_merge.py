@@ -30,7 +30,7 @@ l = [1, 3, 2, 4, 0]
 # print(merge(l))
 
 # time n
-def sort(left, right):
+def merge(left, right):
     i, j = 0, 0
     arr = []
     while i < len(left) and j < len(right):
@@ -44,13 +44,14 @@ def sort(left, right):
     arr.extend(right[j:])
     return arr
 
-def merge(arr):
+def merge_sort(arr: list):
     if len(arr) <= 1:
         return arr
+
     mid = len(arr) // 2
-    left = merge(arr[:mid])
-    right = merge(arr[mid:])
-    arr = sort(left, right)
-    return arr
+    left = merge_sort(arr[: mid])
+    right = merge_sort(arr[mid:])
+
+    return merge(left, right)
 
 print(merge(l))
