@@ -10,5 +10,5 @@ https://leetcode-solution-leetcode-pp.gitbook.io/leetcode-solution/medium/152.ma
 github
 https://github.com/azl397985856/leetcode
 
-星数最高的算法
+a lot of star
 https://github.com/TheAlgorithms/Python/tree/master/sorts
