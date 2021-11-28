@@ -1,3 +1,6 @@
+# 12645 12345
+# 12a34 > 12b34 删除a
+
 class Solution(object):
     def removeKdigits(self, num, k):
         """
