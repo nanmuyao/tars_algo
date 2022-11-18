@@ -1,0 +1,39 @@
+package main
+
+import "fmt"
+
+type Node struct {
+	next *Node
+	v    int32
+}
+
+func addNodeHead(head *Node, v int32) int {
+	if head == nil {
+		return -1
+	}
+
+	node := &Node{nil, v}
+	begin := head.next
+	head.next = node
+	node.next = begin
+	return 0
+}
+
+func showLinkList(head *Node) {
+	for cursor := head; cursor.next != nil; cursor = cursor.next {
+		fmt.Printf("%+v", cursor)
+		fmt.Println()
+	}
+}
+
+func main() {
+	head := new(Node)
+	tail := new(Node)
+	head.next = tail
+
+	fmt.Printf("%+v", head)
+
+	addNodeHead(head, 2)
+	addNodeHead(head, 3)
+	showLinkList(head)
+}
